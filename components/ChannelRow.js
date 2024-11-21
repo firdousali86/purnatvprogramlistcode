@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   channelName: {
-    width: 100,
+    width: SLOT_WIDTH,
     fontWeight: "bold",
     textAlign: "center",
   },
