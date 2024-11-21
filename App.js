@@ -1,4 +1,11 @@
-import { Text, SafeAreaView, StyleSheet, ScrollView, View } from "react-native";
+import {
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  View,
+  FlatList,
+} from "react-native";
 import { useRef } from "react";
 import TimeMarkers from "./components/TimeMarkers";
 import ChannelRow from "./components/ChannelRow";
@@ -33,18 +40,20 @@ export default function App() {
         <TimeMarkers />
       </ScrollView>
       {/* Channels List (Vertical scrollable) */}
-      <ScrollView
-        style={styles.channelList}
-        contentContainerStyle={styles.channelListContent}
-      >
-        {channels.map((channel, index) => (
+
+      <FlatList
+        data={channels}
+        keyExtractor={(item, index) => `channel-${index}`}
+        renderItem={({ item, index }) => (
           <ChannelRow
             key={index}
-            channel={channel}
+            channel={item}
             scrollRef={(el) => (contentScrollRef.current[index] = el)}
           />
-        ))}
-      </ScrollView>
+        )}
+        contentContainerStyle={styles.channelListContent}
+        style={styles.channelList}
+      />
     </SafeAreaView>
   );
 }
