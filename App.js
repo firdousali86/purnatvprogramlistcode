@@ -10,7 +10,7 @@ import {
 import { useRef } from "react";
 import TimeMarkers from "./components/TimeMarkers";
 import ChannelRow from "./components/ChannelRow";
-import { getCurrentTimePosition } from "./utils";
+import { getCurrentTimePosition, SLOT_WIDTH } from "./utils";
 
 import { channels } from "./data";
 
@@ -29,6 +29,19 @@ export default function App() {
     });
   };
 
+  const NowButton = () => {
+    return (
+      <View style={styles.nowButtonContainer}>
+        <TouchableOpacity
+          style={styles.nowButton}
+          onPress={() => scrollToCurrentTime()}
+        >
+          <Text style={styles.nowButtonText}>Now</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   const scrollToCurrentTime = () => {
     const currentTimePosition = getCurrentTimePosition();
 
@@ -43,16 +56,20 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView
-        horizontal
-        style={styles.timeMarkersContainer}
-        contentContainerStyle={styles.timeMarkersContent}
-        onScroll={syncScroll}
-        scrollEventThrottle={16}
-        ref={timeScrollRef}
-      >
-        <TimeMarkers />
-      </ScrollView>
+      <View style={{ flexDirection: "row" }}>
+        <NowButton />
+        <ScrollView
+          horizontal
+          style={styles.timeMarkersContainer}
+          contentContainerStyle={styles.timeMarkersContent}
+          onScroll={syncScroll}
+          scrollEventThrottle={16}
+          ref={timeScrollRef}
+        >
+          <TimeMarkers />
+        </ScrollView>
+      </View>
+
       {/* Channels List (Vertical scrollable) */}
 
       <FlatList
@@ -68,14 +85,6 @@ export default function App() {
         contentContainerStyle={styles.channelListContent}
         style={styles.channelList}
       />
-      <View style={styles.nowButtonContainer}>
-        <TouchableOpacity
-          style={styles.nowButton}
-          onPress={() => scrollToCurrentTime()}
-        >
-          <Text style={styles.nowButtonText}>Now</Text>
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
   );
 }
@@ -86,10 +95,9 @@ const styles = StyleSheet.create({
   timeMarkersContent: { flexDirection: "row" },
   channelListContent: { paddingBottom: 20 },
   nowButtonContainer: {
-    position: "absolute",
-    top: 50,
-    right: 10,
-    zIndex: 20,
+    width: SLOT_WIDTH,
+    justifyContent: "center",
+    alignItems: "center",
   },
   nowButton: {
     backgroundColor: "#ff4757",
