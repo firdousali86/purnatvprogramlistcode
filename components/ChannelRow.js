@@ -1,4 +1,5 @@
 import { View, Text, ScrollView, StyleSheet } from "react-native";
+import CurrentTimeMarker from "./CurrentTimeMarker";
 
 const SLOT_WIDTH = 100;
 
@@ -56,6 +57,8 @@ const ChannelRow = ({ channel, scrollRef }) => {
             </View>
           );
         })}
+
+        <CurrentTimeMarker />
       </ScrollView>
     </View>
   );

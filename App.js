@@ -2,7 +2,7 @@ import { Text, SafeAreaView, StyleSheet, ScrollView, View } from "react-native";
 import { useRef } from "react";
 import TimeMarkers from "./components/TimeMarkers";
 import ChannelRow from "./components/ChannelRow";
-import CurrentTimeMarker from "./components/CurrentTimeMarker";
+
 import { channels } from "./data";
 
 export default function App() {
@@ -45,9 +45,6 @@ export default function App() {
           />
         ))}
       </ScrollView>
-
-      {/* Current Time Marker */}
-      <CurrentTimeMarker />
     </SafeAreaView>
   );
 }
