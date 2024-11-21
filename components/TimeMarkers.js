@@ -1,5 +1,6 @@
 import { ScrollView, Text, StyleSheet, View } from "react-native";
 import { SLOT_WIDTH } from "../utils/index.js";
+import CurrentTimeMarker from "./CurrentTimeMarker.js";
 
 const TimeMarkers = () => {
   const timeSlots = Array.from({ length: 48 }, (_, i) => {
@@ -19,6 +20,7 @@ const TimeMarkers = () => {
           </Text>
         </View>
       ))}
+      <CurrentTimeMarker />
     </View>
   );
 };
