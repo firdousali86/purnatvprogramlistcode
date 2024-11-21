@@ -11,7 +11,6 @@ const TimeMarkers = () => {
 
   return (
     <View style={styles.timeMarkers}>
-      <View style={{ width: 100 }}></View>
       {timeSlots.map((time, index) => (
         <View style={styles.timeMarkerView}>
           <Text key={index} style={styles.timeMarkerText}>
