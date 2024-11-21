@@ -56,4 +56,5 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff" },
   timeMarkersContainer: { height: 40, backgroundColor: "#f0f0f0" },
   timeMarkersContent: { flexDirection: "row" },
+  channelListContent: { paddingBottom: 20 },
 });

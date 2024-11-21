@@ -25,5 +25,9 @@ export default TimeMarkers;
 
 const styles = StyleSheet.create({
   timeMarkers: { flexDirection: "row" },
-  timeMarkerText: { width: 100, textAlign: "center", fontSize: 12 },
+  timeMarkerText: {
+    width: 100,
+    textAlign: "center",
+    fontSize: 12,
+  },
 });
