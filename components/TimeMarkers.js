@@ -1,4 +1,5 @@
 import { ScrollView, Text, StyleSheet, View } from "react-native";
+import { SLOT_WIDTH } from "../utils/index.js";
 
 const TimeMarkers = () => {
   const timeSlots = Array.from({ length: 48 }, (_, i) => {
@@ -27,6 +28,7 @@ export default TimeMarkers;
 const styles = StyleSheet.create({
   timeMarkers: { flexDirection: "row" },
   timeMarkerView: {
+    width: SLOT_WIDTH,
     borderWidth: 1,
     borderColor: "black",
     height: 40,
@@ -34,7 +36,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   timeMarkerText: {
-    width: 100,
     textAlign: "center",
     fontSize: 12,
   },
