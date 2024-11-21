@@ -13,9 +13,11 @@ const TimeMarkers = () => {
     <View style={styles.timeMarkers}>
       <View style={{ width: 100 }}></View>
       {timeSlots.map((time, index) => (
-        <Text key={index} style={styles.timeMarkerText}>
-          {time}
-        </Text>
+        <View style={styles.timeMarkerView}>
+          <Text key={index} style={styles.timeMarkerText}>
+            {time}
+          </Text>
+        </View>
       ))}
     </View>
   );
@@ -25,6 +27,13 @@ export default TimeMarkers;
 
 const styles = StyleSheet.create({
   timeMarkers: { flexDirection: "row" },
+  timeMarkerView: {
+    borderWidth: 1,
+    borderColor: "black",
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   timeMarkerText: {
     width: 100,
     textAlign: "center",
