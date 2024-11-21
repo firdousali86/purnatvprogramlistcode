@@ -1,25 +1,24 @@
-import { Text, SafeAreaView, StyleSheet, ScrollView, View } from 'react-native';
-import {useRef} from "react";
-import TimeMarkers from "./components/TimeMarkers"
-import ChannelRow from "./components/ChannelRow"
-import CurrentTimeMarker from "./components/CurrentTimeMarker"
-import {channels} from "./data"
+import { Text, SafeAreaView, StyleSheet, ScrollView, View } from "react-native";
+import { useRef } from "react";
+import TimeMarkers from "./components/TimeMarkers";
+import ChannelRow from "./components/ChannelRow";
+import CurrentTimeMarker from "./components/CurrentTimeMarker";
+import { channels } from "./data";
 
 export default function App() {
+  const timeScrollRef = useRef(null);
+  const contentScrollRef = useRef([]);
 
-const timeScrollRef = useRef(null);
-const contentScrollRef = useRef([]);
+  const syncScroll = (event) => {
+    const offsetX = event.nativeEvent.contentOffset.x;
 
-const syncScroll = (event) => {
-  const offsetX = event.nativeEvent.contentOffset.x;
-
-  // Scroll all channel lists to match the time marker
-  contentScrollRef.current.forEach((ref) => {
-    if (ref && ref.scrollTo) {
-      ref.scrollTo({ x: offsetX, animated: false });
-    }
-  });
-};
+    // Scroll all channel lists to match the time marker
+    contentScrollRef.current.forEach((ref) => {
+      if (ref && ref.scrollTo) {
+        ref.scrollTo({ x: offsetX, animated: false });
+      }
+    });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -33,10 +32,17 @@ const syncScroll = (event) => {
       >
         <TimeMarkers />
       </ScrollView>
-       {/* Channels List (Vertical scrollable) */}
-      <ScrollView style={styles.channelList} contentContainerStyle={styles.channelListContent}>
+      {/* Channels List (Vertical scrollable) */}
+      <ScrollView
+        style={styles.channelList}
+        contentContainerStyle={styles.channelListContent}
+      >
         {channels.map((channel, index) => (
-          <ChannelRow key={index} channel={channel} scrollRef={(el) => (contentScrollRef.current[index] = el)} />
+          <ChannelRow
+            key={index}
+            channel={channel}
+            scrollRef={(el) => (contentScrollRef.current[index] = el)}
+          />
         ))}
       </ScrollView>
 
@@ -47,7 +53,7 @@ const syncScroll = (event) => {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
-  timeMarkersContainer: { height: 40, backgroundColor: '#f0f0f0' },
-  timeMarkersContent: { flexDirection: 'row' },
+  container: { flex: 1, backgroundColor: "#fff" },
+  timeMarkersContainer: { height: 40, backgroundColor: "#f0f0f0" },
+  timeMarkersContent: { flexDirection: "row" },
 });
