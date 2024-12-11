@@ -20,6 +20,18 @@ export default function App() {
 
   const syncScroll = (event) => {
     const offsetX = event.nativeEvent.contentOffset.x;
+    // Scroll all channel lists to match the time marker
+    contentScrollRef.current.forEach((ref) => {
+      if (ref && ref.scrollTo) {
+        ref.scrollTo({ x: offsetX, animated: false });
+      }
+    });
+  };
+
+  const onChannelScroll = (event) => {
+    const offsetX = event.nativeEvent.contentOffset.x;
+
+    timeScrollRef.current?.scrollTo({ x: offsetX, animated: false });
 
     // Scroll all channel lists to match the time marker
     contentScrollRef.current.forEach((ref) => {
@@ -46,11 +58,14 @@ export default function App() {
     const currentTimePosition = getCurrentTimePosition();
 
     // Scroll the time markers
-    timeScrollRef.current?.scrollTo({ x: currentTimePosition, animated: true });
+    timeScrollRef.current?.scrollTo({
+      x: currentTimePosition,
+      animated: false,
+    });
 
     // Scroll all channel program lists
     contentScrollRef.current.forEach((ref) => {
-      ref?.scrollTo({ x: getCurrentTimePosition(), animated: true });
+      ref?.scrollTo({ x: getCurrentTimePosition(), animated: false });
     });
   };
 
@@ -65,6 +80,7 @@ export default function App() {
           onScroll={syncScroll}
           scrollEventThrottle={16}
           ref={timeScrollRef}
+          showsHorizontalScrollIndicator={false}
         >
           <TimeMarkers />
         </ScrollView>
@@ -80,6 +96,7 @@ export default function App() {
             key={index}
             channel={item}
             scrollRef={(el) => (contentScrollRef.current[index] = el)}
+            onChannelScroll={onChannelScroll}
           />
         )}
         contentContainerStyle={styles.channelListContent}

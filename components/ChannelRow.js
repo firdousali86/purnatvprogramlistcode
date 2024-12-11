@@ -17,7 +17,7 @@ const calculateProgramPosition = (startTime, duration) => {
   return { left, width };
 };
 
-const ChannelRow = ({ channel, scrollRef }) => {
+const ChannelRow = ({ channel, scrollRef, onChannelScroll }) => {
   return (
     <View style={styles.channelRow}>
       <Text style={styles.channelName}>{channel.name}</Text>
@@ -25,7 +25,9 @@ const ChannelRow = ({ channel, scrollRef }) => {
         horizontal
         style={styles.programContainer}
         ref={scrollRef}
-        scrollEnabled={false} // Disable direct horizontal scrolling
+        scrollEnabled={true} // Disable direct horizontal scrolling
+        onScroll={onChannelScroll}
+        showsHorizontalScrollIndicator={false}
       >
         {/* Background placeholder view */}
         <View style={styles.placeholder}>
@@ -69,7 +71,6 @@ const styles = StyleSheet.create({
   channelRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: 10,
   },
   channelName: {
     width: SLOT_WIDTH,
