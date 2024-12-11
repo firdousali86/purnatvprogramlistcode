@@ -6,6 +6,7 @@ import {
   View,
   FlatList,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { useRef, useState } from "react";
 import TimeMarkers from "./components/TimeMarkers";
@@ -35,6 +36,9 @@ export default function App() {
   };
 
   const onChannelScroll = (event) => {
+    if (Platform.OS == "android") {
+      return;
+    }
     const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent;
     const offsetX = contentOffset.x;
     const totalScrollableWidth = contentSize.width - layoutMeasurement.width;
@@ -130,7 +134,7 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff" },
+  container: { flex: 1, backgroundColor: "#fff", marginTop: 100 },
   timeMarkersContainer: { height: 40, backgroundColor: "#f0f0f0" },
   timeMarkersContent: { flexDirection: "row" },
   channelListContent: { paddingBottom: 20 },

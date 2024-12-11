@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import { View, Text, ScrollView, StyleSheet, Platform } from "react-native";
 import CurrentTimeMarker from "./CurrentTimeMarker";
 import { SLOT_WIDTH } from "../utils";
 
@@ -25,7 +25,7 @@ const ChannelRow = ({ channel, scrollRef, onChannelScroll }) => {
         horizontal
         style={styles.programContainer}
         ref={scrollRef}
-        scrollEnabled={true} // Disable direct horizontal scrolling
+        scrollEnabled={Platform.OS == "ios"} // Disable direct horizontal scrolling
         onScroll={onChannelScroll}
         showsHorizontalScrollIndicator={false}
       >
