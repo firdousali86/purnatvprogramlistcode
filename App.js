@@ -6,7 +6,6 @@ import {
   View,
   FlatList,
   TouchableOpacity,
-  Platform,
 } from "react-native";
 import { useRef, useState } from "react";
 import TimeMarkers from "./components/TimeMarkers";
@@ -27,39 +26,6 @@ export default function App() {
 
   const syncScroll = (event) => {
     const offsetX = event.nativeEvent.contentOffset.x;
-    // Scroll all channel lists to match the time marker
-    contentScrollRef.current.forEach((ref) => {
-      if (ref && ref.scrollTo) {
-        ref.scrollTo({ x: offsetX, animated: false });
-      }
-    });
-  };
-
-  const onChannelScroll = (event) => {
-    if (Platform.OS == "android") {
-      return;
-    }
-    const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent;
-    const offsetX = contentOffset.x;
-    const totalScrollableWidth = contentSize.width - layoutMeasurement.width;
-
-    const scrollPercentage = (offsetX / totalScrollableWidth) * 100;
-
-    if (scrollPercentage >= 25 && !triggeredPoints[25]) {
-      console.log("Scrolled 25%");
-      setTriggeredPoints((prev) => ({ ...prev, 25: true }));
-    }
-    if (scrollPercentage >= 50 && !triggeredPoints[50]) {
-      console.log("Scrolled 50%");
-      setTriggeredPoints((prev) => ({ ...prev, 50: true }));
-    }
-    if (scrollPercentage >= 75 && !triggeredPoints[75]) {
-      console.log("Scrolled 75%");
-      setTriggeredPoints((prev) => ({ ...prev, 75: true }));
-    }
-
-    timeScrollRef.current?.scrollTo({ x: offsetX, animated: false });
-
     // Scroll all channel lists to match the time marker
     contentScrollRef.current.forEach((ref) => {
       if (ref && ref.scrollTo) {
@@ -100,17 +66,6 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <View style={{ flexDirection: "row" }}>
         <NowButton />
-        <ScrollView
-          horizontal
-          style={styles.timeMarkersContainer}
-          contentContainerStyle={styles.timeMarkersContent}
-          onScroll={syncScroll}
-          scrollEventThrottle={16}
-          ref={timeScrollRef}
-          showsHorizontalScrollIndicator={false}
-        >
-          <TimeMarkers />
-        </ScrollView>
       </View>
 
       {/* Channels List (Vertical scrollable) */}
@@ -123,19 +78,36 @@ export default function App() {
             key={index}
             channel={item}
             scrollRef={(el) => (contentScrollRef.current[index] = el)}
-            onChannelScroll={onChannelScroll}
           />
         )}
         contentContainerStyle={styles.channelListContent}
         style={styles.channelList}
       />
+      <ScrollView
+        horizontal
+        style={styles.timeMarkersContainer}
+        contentContainerStyle={styles.timeMarkersContent}
+        onScroll={syncScroll}
+        scrollEventThrottle={16}
+        ref={timeScrollRef}
+        showsHorizontalScrollIndicator={false}
+      >
+        <TimeMarkers />
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff", marginTop: 100 },
-  timeMarkersContainer: { height: 40, backgroundColor: "#f0f0f0" },
+  timeMarkersContainer: {
+    backgroundColor: "transparent",
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: SLOT_WIDTH,
+    right: 0,
+  },
   timeMarkersContent: { flexDirection: "row" },
   channelListContent: { paddingBottom: 20 },
   nowButtonContainer: {

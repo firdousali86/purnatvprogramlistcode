@@ -17,7 +17,7 @@ const calculateProgramPosition = (startTime, duration) => {
   return { left, width };
 };
 
-const ChannelRow = ({ channel, scrollRef, onChannelScroll }) => {
+const ChannelRow = ({ channel, scrollRef }) => {
   return (
     <View style={styles.channelRow}>
       <Text style={styles.channelName}>{channel.name}</Text>
@@ -25,8 +25,6 @@ const ChannelRow = ({ channel, scrollRef, onChannelScroll }) => {
         horizontal
         style={styles.programContainer}
         ref={scrollRef}
-        scrollEnabled={Platform.OS == "ios"} // Disable direct horizontal scrolling
-        onScroll={onChannelScroll}
         showsHorizontalScrollIndicator={false}
       >
         {/* Background placeholder view */}
@@ -58,8 +56,6 @@ const ChannelRow = ({ channel, scrollRef, onChannelScroll }) => {
             </View>
           );
         })}
-
-        <CurrentTimeMarker />
       </ScrollView>
     </View>
   );
